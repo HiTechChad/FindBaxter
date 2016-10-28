@@ -1,0 +1,48 @@
+<html>
+	<head>
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<meta name="google-signin-client_id" content="499665031209-e3bgaq73dpfg25ohf59hs44r27om22l3.apps.googleusercontent.com">
+		<div class="g-signin2" data-onsuccess="onSignIn"></div>
+		<script>
+			var userimage = "";
+			function onSignIn(googleUser) {
+			  var profile = googleUser.getBasicProfile();
+			  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+			  console.log('Name: ' + profile.getName());
+			  console.log('Image URL: ' + profile.getImageUrl());
+			  console.log('Email: ' + profile.getEmail());
+			  var email = profile.getEmail();
+			  var domain = "baxter-academy.org"
+			  var esplit = email.split("@");
+			  console.log(esplit);
+			  if(esplit[1] == domain){
+				console.log("currect domain");
+			  }else{
+				console.log("Your not a baxter student or staff")
+				signOut();
+			  }
+			  document.getElementById('myImg').src = profile.getImageUrl();
+			  document.getElementById('myImg').style.display = "block"
+			  document.getElementById('name').innerHTML = profile.getName();
+			  document.getElementById('name').style.display = "block"
+			}
+			function signOut() {
+				var auth2 = gapi.auth2.getAuthInstance();
+				auth2.signOut().then(function () {
+				  console.log('User signed out.');
+				  document.getElementById('myImg').src = "";
+				  document.getElementById('myImg').style.display = "none"
+				  document.getElementById('name').innerHTML = "";
+				  document.getElementById('name').style.display = "none"
+				});
+			  }
+		</script>
+		<a href="#" onclick="signOut();">Sign out</a>
+	</head>
+	<body>
+		<div class="profile_Display">
+		<img class="profile_image" src="" id="myImg" style="width:170px;height:170px;border-radius:85px;display:none;"/>
+		<h1 class="Name" id="name" style="display:none;font-size:32px;"></h1>
+		</div>
+	</body>
+</html>
