@@ -1,0 +1,6 @@
+body 							{background: gray; }
+.button							{position: absolute; left: 45%;}
+.profile_display 				{background: blue; width: 200px;}
+.prof_image						{padding-left: 50px; padding-top: 5px;}
+.profile_image					{border:1px solid #000;border-radius:85px;}
+.name		  					{position: relative;left: 25%;font-size:15px}
