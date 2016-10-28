@@ -1,6 +1,45 @@
+<<<<<<< HEAD
 client 1: 			I need list of users
 server: 			finds list
 server response: 		heres a list
+=======
+
+
+1. GET USERS
+
+/getUsers
+
+Synopsis:
+	client 1: 			I need list of users
+	server: 			finds list
+	server response: 	heres a list
+
+@request:
+- access_token : user's access token for authentication validation
+
+
+@response:
+
+{
+	total : <TOTAL NUMBER>,
+
+	contacts : [
+		{
+			userId		: <USER ID>,
+			first_name 	: <FIRST NAME>,
+			last_name 	: <LAST NAME>,
+			email 		: <EMAIL>
+		}
+		..
+	]
+}
+
+
+
+
+
+
+>>>>>>> 2785269d66bd6d47439a2a7e07cce9ac8ce04632
 client 1: 			I would like a meeting with this person
 server: 			checks that persons availability settings
 server: 			I will request it with the teacher
