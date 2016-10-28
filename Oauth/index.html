@@ -11,6 +11,8 @@
 			  console.log('Name: ' + profile.getName());
 			  console.log('Image URL: ' + profile.getImageUrl());
 			  console.log('Email: ' + profile.getEmail());
+			  var id_token = googleUser.getAuthResponse().id_token;
+			  console.log("ID Token: " + id_token);
 			  var email = profile.getEmail();
 			  var domain = "baxter-academy.org"
 			  var esplit = email.split("@");
@@ -24,20 +26,23 @@
 			  document.getElementById('myImg').src = profile.getImageUrl();
 			  document.getElementById('myImg').style.display = "block"
 			  document.getElementById('name').innerHTML = profile.getName();
-			  document.getElementById('name').style.display = "block"
+			  document.getElementById('name').style.display = "block";
+			  document.getElementById('sign_out').style.display = "block";
 			}
 			function signOut() {
 				var auth2 = gapi.auth2.getAuthInstance();
 				auth2.signOut().then(function () {
 				  console.log('User signed out.');
 				  document.getElementById('myImg').src = "";
-				  document.getElementById('myImg').style.display = "none"
+				  document.getElementById('myImg').style.display = "none";
 				  document.getElementById('name').innerHTML = "";
-				  document.getElementById('name').style.display = "none"
+				  document.getElementById('name').style.display = "none";
+				  document.getElementById('sign_out').style.display = "none";
+
 				});
 			  }
 		</script>
-		<a href="#" onclick="signOut();">Sign out</a>
+		<a href="#" id="sign_out" onclick="signOut();">Sign out</a>
 	</head>
 	<body>
 		<div class="profile_Display">
