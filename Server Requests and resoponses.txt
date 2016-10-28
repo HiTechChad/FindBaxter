@@ -1,14 +1,14 @@
 client 1: 			I need list of users
 server: 			finds list
-server response: 	heres a list
+server response: 		heres a list
 client 1: 			I would like a meeting with this person
 server: 			checks that persons availability settings
 server: 			I will request it with the teacher
 server: 			sends request to send text
-server response: 	ok i have sent a request
+server response: 		ok i have sent a request
 client 2: 			sure ok
 server: 			ok setting up meeting
-server response: 	your meeting is set for 00:00
+server response: 		your meeting is set for 00:00
 server:				availability settings changed
 server:				grace period time starts
 server:				meeting timer starts
