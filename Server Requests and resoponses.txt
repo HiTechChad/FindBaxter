@@ -66,16 +66,17 @@ Synopsis:
 
 @response
 
-	contacts : [
+	contact : [
 		{
 			userId		: <USER ID>,
 			first_name 	: <FIRST NAME>,
 			last_name 	: <LAST NAME>,
 			email 		: <EMAIL>
 		}
-	
+	]
 	sendrequest(userId){
 		prefs : [
+		     {
 			available	: <BOOL>,
 			busyTime	: <12:00 - 1:00>,
 		]
