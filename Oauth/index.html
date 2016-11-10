@@ -4,37 +4,43 @@
 		<link rel="stylesheet" href="style.css"/>
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		<meta name="google-signin-client_id" content="499665031209-e3bgaq73dpfg25ohf59hs44r27om22l3.apps.googleusercontent.com">
-		<div class="button" id="button" style="display:block;">
-			<div class="g-signin2" data-onsuccess="onSignIn"></div>
-		</div>
+		
 		<script>
-			  function onSignIn(googleUser) {
-			  var profile = googleUser.getBasicProfile();
-			  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-			  console.log('Name: ' + profile.getName());
-			  console.log('Image URL: ' + profile.getImageUrl());
-			  console.log('Email: ' + profile.getEmail());
-			  var id_token = googleUser.getAuthResponse().id_token;
-			  console.log("ID Token: " + id_token);
-			  var email = profile.getEmail();
-			  var domain = "baxter-academy.org"
-			  var esplit = email.split("@");
-			  console.log(esplit);
-			  if(esplit[1] == domain){
-				console.log("currect domain");
-			  }else{
-				console.log("Your not a baxter student or staff")
-				signOut();
-			  }
-			  document.getElementById('myImg').src = profile.getImageUrl();
-			  document.getElementById('myImg').style.display = "block"
-			  document.getElementById('name').innerHTML = profile.getName();
-			  document.getElementById('name').style.display = "block";
-			  document.getElementById('sign_out1').style.display = "block";
-			  document.getElementById('profile').style.display = "block";
-			  document.getElementById('Email').style.display = "block";
-			  $('#Email').html(profile.getEmail());
-			  document.getElementById('button').style.display = "none";
+			function onSignIn(googleUser) {
+				
+				// get profile
+				var profile = googleUser.getBasicProfile();
+				console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+				console.log('Name: ' + profile.getName());
+				console.log('Image URL: ' + profile.getImageUrl());
+				console.log('Email: ' + profile.getEmail());
+				
+				// get id
+				var id_token = googleUser.getAuthResponse().id_token;
+				console.log("ID Token: " + id_token);
+				
+				// get email + check
+				var email = profile.getEmail();
+				var domain = "baxter-academy.org"
+				var esplit = email.split("@");
+				console.log(esplit);
+				if(esplit[1] == domain){
+					console.log("currect domain");
+				}else{
+					console.log("Your not a baxter student or staff")
+					signOut();
+				}
+
+				// display image + name
+				document.getElementById('myImg').src = profile.getImageUrl();
+				document.getElementById('myImg').style.display = "block"
+				document.getElementById('name').innerHTML = profile.getName();
+				document.getElementById('name').style.display = "block";
+				document.getElementById('sign_out1').style.display = "block";
+				document.getElementById('profile').style.display = "block";
+				document.getElementById('Email').style.display = "block";
+				$('#Email').html(profile.getEmail());
+				document.getElementById('button').style.display = "none";
 
 			  
 			}
@@ -53,9 +59,16 @@
 				});
 			  }
 		</script>
-		<a href="#" class="sign_out" id="sign_out1" onclick="signOut();" style="display:none;">Sign out</a>
+		
 	</head>
 	<body>
+		<!-- LOGIN CONTROLS -->
+		<a href="#" class="sign_out" id="sign_out1" onclick="signOut();" style="display:none;">Sign out</a>
+		<div class="button" id="button" style="display:block;">
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+		</div>
+
+		<!-- PROFILE DISPLAY -->
 		<div class="profile_Display" id="profile">
 			<div class="prof_image">
 				<img class="profile_image" src="" id="myImg" style=""/>
