@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="style.css"/>
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		<meta name="google-signin-client_id" content="499665031209-e3bgaq73dpfg25ohf59hs44r27om22l3.apps.googleusercontent.com">
-		<div class="button">
+		<div class="button" id="button" style="display:block;">
 			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 		</div>
 		<script>
@@ -32,6 +32,9 @@
 			  document.getElementById('name').style.display = "block";
 			  document.getElementById('sign_out1').style.display = "block";
 			  document.getElementById('profile').style.display = "block";
+			  document.getElementById('Email').style.display = "block";
+			  $('#Email').html(profile.getEmail());
+			  document.getElementById('button').style.display = "none";
 
 			  
 			}
@@ -45,21 +48,10 @@
 				  document.getElementById('name').style.display = "none";
 				  document.getElementById('sign_out1').style.display = "none";
 				  document.getElementById('profile').style.display = "none";
+				  document.getElementById('button').style.display = "block";
 
 				});
 			  }
-			  function toPython(){
-				$.ajax({
-					url: "http://localhost:8080",
-					type: "POST",
-					data: { information : "You have a very nice website, sir." , "yup" : "yup" },
-					dataType: "json",
-					success: function(data) {
-						<!-- do something here -->
-						$('#the_text').html(data);
-					}
-				});
-			}
 		</script>
 		<a href="#" class="sign_out" id="sign_out1" onclick="signOut();" style="display:none;">Sign out</a>
 	</head>
@@ -71,14 +63,12 @@
 			<div class="prof_name">
 				<h1 class="Name" id="name" style="display:none;"></h1>
 			</div>
+			<div class="prof_email">
+				<h2 class="Email" id="Email" style="display:none;"></h2>
 		</div>
-		<div class="Choice_options">
-		
-		
-		</div>
+		<div class="Choice_options"></div>
 		<div class="information">
-			<div class="the_text" id="the_text">lalalalal</div>
-			<p onclick="toPython()">clickme</p>
+			
 		</div>
 	</body>
 </html>
