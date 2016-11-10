@@ -1,12 +1,12 @@
 body {
-	background: yellow;
+	background: #dddad6;
 }
 .button	{
 	position: absolute; 
 	left: 45%;
 }
 .profile_display {
-	background: blue; 
+	background: #9ad3de; 
 	width: 200px;
 }
 .prof_image	{
@@ -14,7 +14,7 @@ body {
 	padding-top: 5px;
 }
 .profile_image {
-	border:1px solid #000;
+	border:1px solid #dddad6;
 	border-radius:85px;
 }
 .name {
@@ -24,5 +24,7 @@ body {
 }
 .Email {
 	position: relative;
+	left: 10%;
 	font-size:10px;
+	padding-bottom: 10px;
 }
