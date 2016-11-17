@@ -1,4 +1,24 @@
-body {	background: #dddad6;}
+body { display: flex;	background: #dddad6;}
+.logo {
+	padding-top: 50px;
+	padding-left: 230px;
+	vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    width: 120px;
+}
+.logo_image {
+	padding-top: 50px;
+	padding-left: 50px;
+	margin: auto;
+	display: block;
+}
+.sign_button{
+	padding-top: 30px;
+	padding-left: 355px;
+	display: block;
+}
+
 .wrapper {
 	background: #dddad6;
 	width: 100%;
