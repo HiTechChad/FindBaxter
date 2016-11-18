@@ -116,3 +116,9 @@ body { display: flex;	background: #dddad6;}
     border-bottom: none;
   }
 }
+.settings {
+	display: flex;
+	background: #89bdd3;
+	border-top: 8px solid white;
+	height: 69.2%;
+}
