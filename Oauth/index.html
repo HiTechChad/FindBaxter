@@ -4,7 +4,7 @@
 		<link rel="stylesheet" href="style.css"/>
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		<meta name="google-signin-client_id" content="499665031209-e3bgaq73dpfg25ohf59hs44r27om22l3.apps.googleusercontent.com">
-		
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="style.css">
 		<script>
 			function onSignIn(googleUser) {
 				
@@ -43,6 +43,7 @@
 				document.getElementById('sign_button').style.display = "none";
 				document.getElementById('options').style.display = "block";
 				document.getElementById('logo').style.display = "none";
+				document.getElementById('settings').style.display= "block";
 
 			  
 			}
@@ -59,7 +60,7 @@
 				  document.getElementById('sign_button').style.display = "block";
 				  document.getElementById('options').style.display = "none";
 				  document.getElementById('logo').style.display = "block";
-
+				  document.getElementById('settings').style.display= "none";
 				});
 			  }
 		</script>
@@ -79,11 +80,6 @@
 				<img class="profile image" src="" id="myImg" style=""/>
 				<div class="profile name" id="name" style="display:none;"></div>
 				<div class="profile email"id="Email"style="display:none;"></div>
-				<!-- Account Settings -->
-				<div class="settings">
-				
-					<a href="#" class="sign_out" id="sign_out1" onclick="signOut();" style="display:none;">Sign out</a>
-				</div>
 			</div>
 			<!-- Options for Teacher or Student -->
 			<div class="options" id="options" style="display:none;">
@@ -93,6 +89,13 @@
 					<li type=""><a href="#">Staff</a></li>
 				</div>
 			</div>
+			<!-- Account Settings -->
+				<div class="settings" id="settings" style="list-style: none; display: none;">
+					<li type=""><button class="myButton">Help</button><li>
+					<li type=""><button class="myButton">Settings</button></li>
+					<li type=""><button class="myButton">Account</button></li>
+					<li type=""><button href="#" class="sign_out myButton" id="sign_out1" onclick="signOut()" style="display:none;">Sign Out</button></li>
+				</div>
 		</div>
 	</body>
 </html>
