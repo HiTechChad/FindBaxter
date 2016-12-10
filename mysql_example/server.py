@@ -1,7 +1,7 @@
 
 
 #import system libs
-import mysql.connector, os, json
+import mysql.connector, os, json, model
 from gevent.pywsgi import WSGIServer
 from gevent import monkey
 monkey.patch_all() # makes many blocking calls asynchronous
@@ -40,7 +40,6 @@ def application(environ, start_response):
 		headers = [('content-type', 'application/javascript')]
 		start_response('200 OK', headers)
 		return [json.dumps(response)]
-
 
 
 
