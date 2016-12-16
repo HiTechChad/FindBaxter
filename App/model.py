@@ -9,8 +9,6 @@ class AppModel:
 		
 
 	def addPerson(model, request):
-		if (!("person" in request)) :
-			return {"error" : "Request Error: No person requested"}
 		person = request["person"]
 		return database.insertObj(person, "users")
 
