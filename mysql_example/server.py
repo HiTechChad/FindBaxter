@@ -31,9 +31,9 @@ def application(environ, start_response):
 			if v in dir(m): 
 			 	response = getattr(m, v)(r) #do this shit!
 			else:
-				response = { "error_message" : "That action is unavailable."}
+				response = { "error" : "That action is unavailable."}
 		else:
-			response = { "error_message" : "No action requested."}
+			response = { "error" : "No action requested."}
 
 
 		

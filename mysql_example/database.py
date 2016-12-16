@@ -70,7 +70,7 @@ def insertObj(obj, tableName):
 
 	else :
 		cursor = dbResponse["cursor"]
-		response = ("newId", cursor.lastrowid)
+		response = {"newId": cursor.lastrowid}
 		cursor.close() 
 		config.conn.commit()
 		return response

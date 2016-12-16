@@ -13,3 +13,21 @@ class AppModel:
 			return {"error" : "Request Error: No person requested"}
 		person = request["person"]
 		return database.insertObj(person, "users")
+
+		
+	'''
+	getPeople
+	- @param:
+		// if no param, return all people
+		
+	- @return PEOPLE LIST
+		[
+			{ person (see above)},
+			{ person (see above)}
+	]
+	'''
+	def getPeople(model, request):
+		query = "SELECT * FROM users"
+		return database.get_results(query)
+		
+		
