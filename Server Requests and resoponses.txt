@@ -109,3 +109,32 @@ server:				grace period time starts
 server:				meeting timer starts
 server:				timer ends
 server:				availability settings changed
+
+
+
+
+
+
+getPerson
+- @param: 
+	{ name : <name string> }
+	
+- @return PERSON OBJECT:
+	{
+		name : <name string>,
+		pic: <pic path string (relative path to an image file)>,
+		email: <email string>
+	}
+	
+	
+getPeople
+- @param:
+	// if no param, return all people
+	
+- @return PEOPLE LIST
+	[
+		{ person (see above)},
+		{ person (see above)}
+	]
+	
+	
