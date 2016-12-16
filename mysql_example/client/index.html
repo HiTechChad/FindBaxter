@@ -41,6 +41,16 @@
 				color: #365899; font-size: 13px
 			}
 
+			.error {
+				border: solid 1px red;
+			}
+
+			.badEmail {
+				font-size: 50px;
+				font-weight: bold;
+
+			}
+
 		</style>
 
 
@@ -56,14 +66,25 @@
 				<option ng-repeat="person in people">{{person}}</option>
 			</select>
 
+			<Button ng-click="changeView('add')">ADD</button>
 
-			<div class="personFrame" ng-if="selected_person">
+			<div class="personFrame" ng-if="selected_person && view == 'viewPerson' ">
 				<img ng-src="images/{{selected_person.pic}}" />
 				<div class="name">{{selected_person.name}}</div>
 				<a href="mailto: {{selected_person.email}}" class="email">{{selected_person.email}}</a>
-
 			</div>
-		<Button ng-change="test()" ng-model="personAdd">add</button>
+
+			<div class="personFrame" ng-if="view == 'add'">
+				<br /><br />
+				<input placeholder="Name" ng-model="newPerson.name" ng-class="{error: errors.name}" />
+				<br /><br />
+				<input placeholder="Email" ng-model="newPerson.email" ng-class="{error: errors.email}" />
+				<p ng-if="errors.badEmail" class="badEmail">BAD EMAIL!!!! YOU SHOULD BE ASHAMED</p>
+				<br /><br />
+				<Button ng-click="addPerson()">SUBMIT</button>
+			</div>
+
+			
 		</div>
 
 	</body>

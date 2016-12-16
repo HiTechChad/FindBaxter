@@ -1,20 +1,59 @@
 
-import config
+import config, mysql.connector
 
 def executeSQL(query):
 	c = config.conn
 	c.ping(True)
 	cur = c.cursor()
-	cur.execute(query)
-	return cur
+
+	try:
+		cur.execute(query)
+		return {"cursor" : cur }
+
+	except mysql.connector.Error as e:
+		cur.close()
+		return {"error" : "MySQL Error: %s" % str(e)}
+
 
 
 # RUN QUERY AND RETURN DATA OBJECT
 def get_results(query) :
-	cur = executeSQL(query)
+
+	# Run Query
+	dbResponse = executeSQL(query)
+	if("error" in dbResponse) : return [dbResponse] 
+
+	# Build Response Object
+	cur = dbResponse["cursor"]
 	columns = tuple( [d[0].decode('utf8') for d in cur.description] ) 
 	result = [] 
 	for row in cur: result.append(dict(zip(columns, row))) 
 	cur.close() 
 	return result
+
+
+# ADD OBJ TO TABLE
+def insertObj(obj, tableName):
+
+	d = dict(obj)  
+
+	# Write SQL Query
+	query = "INSERT INTO {0} ({1}) VALUES ({2})"
+	columns = ','.join(d.keys())
+	placeholders = ','.join(['"%s"'] * len(d))
+	sql = query.format(tableName, columns, placeholders) % tuple(d.values())
+
+	# Run It and Handle Error
+	dbResponse = executeSQL(sql)
+
+	if ("error" in dbResponse) : return dbResponse
+
+	else :
+		cursor = dbResponse["cursor"]
+		response = ("newId", cursor.lastrowid)
+		cursor.close() 
+		config.conn.commit()
+		return response
+
+
 

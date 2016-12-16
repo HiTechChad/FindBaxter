@@ -1,13 +1,14 @@
 
 
 #import system libs
-import mysql.connector, os, json, model
+import mysql.connector, os, json, sys
 from gevent.pywsgi import WSGIServer
 from gevent import monkey
 monkey.patch_all() # makes many blocking calls asynchronous
 
 
 # import application objects
+sys.path.insert(0, '../config') # moved outside repo to be system-specific
 import config, website, database, model
 
 
