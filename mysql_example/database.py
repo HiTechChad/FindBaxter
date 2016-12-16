@@ -39,13 +39,15 @@ def get_results(query) :
 
 	# Run Query
 	dbResponse = executeSQL(query)
-	if("error" in dbResponse) : dbResponse
+	if("error" in dbResponse) : return dbResponse
 
 	# Build Response Object
 	cur = dbResponse["cursor"]
 	columns = tuple( [d[0].decode('utf8') for d in cur.description] ) 
 	result = [] 
-	for row in cur: result.append(dict(zip(columns, row))) 
+	for row in cur: 
+		result.append(dict(zip(columns, row))) 
+
 	cur.close() 
 	return result
 
