@@ -15,6 +15,12 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 				"Adam Gilman",
 				"banana"
 			];
+			$scope.meetings = [
+				"short",
+				"meadium",
+				"long"
+			
+			];
 			$scope.newPerson = {
 				name : "",
 				email : "",
