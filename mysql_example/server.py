@@ -37,7 +37,10 @@ def application(environ, start_response):
 
 		
 		# send response
-		headers = [('content-type', 'application/javascript')]
+		headers = [
+			('content-type', 'application/json'),
+    		("Access-Control-Allow-Origin", "*")
+		]
 		start_response('200 OK', headers)
 		return [json.dumps(response)]
 

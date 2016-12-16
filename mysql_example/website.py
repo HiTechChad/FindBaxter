@@ -2,7 +2,10 @@ import os, json
 
 def return_static(environ, start_response):
 
-	path = os.getcwd() + "/client" + environ['PATH_INFO']
+	path = environ['PATH_INFO']
+	if(path == '' or path == '/') : path = '/index.html'
+	
+	path = os.getcwd() + "/client" + path
 
 	# if path exists
 	if os.path.exists(path):
@@ -25,7 +28,10 @@ def return_static(environ, start_response):
     
 		
 		# return static asset
-		headers = [('content-type', contentType)]
+		headers = [
+			('content-type', contentType),
+    		("Access-Control-Allow-Origin", "*")
+    	]
 		start_response('200 OK', headers)
 		return [content]
 
