@@ -24,29 +24,51 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 			}
 		}
 
+
 		// CHANGE VIEW
 		$scope.changeView = function(viewName){
 			$scope.view = viewName;
 		}
 
 
-		// MAKE API CALL AND LOAD RETURNED JSON
+
+		/*********************************************************
+		* API INTEGRATION
+		**********************************************************/
+
+		// CALL API
+		$scope.callAPI = function(req, f){
+			$http.post('api.py', req).then(function(responseHTTP){
+				var response = responseHTTP.data;
+				if(("error" in response)) {
+					$scope.view = 'error';
+					$scope.error = response.error;
+				}
+				else f(response);
+			});
+		}
+
+
+		// FETCH PERSON BY NAME
 		$scope.fetchPerson = function(){
 			var req = {
 				verb : 'getPerson',
 				name : $scope.selectedName
 			}
 
-			$http.post('api.py', req).then(function(response){
-				$scope.selected_person = response.data;
+			$scope.callAPI(req, function(response){
+				$scope.selected_person = response;
 				$scope.view = 'viewPerson'
 			});		
 		}
 
+
+		// ADD PERSON
 		$scope.addPerson = function(){
 
+			// VALIDATION
 			$scope.errors = {};
-
+			
 			if($scope.newPerson.name == ""){
 				$scope.errors.name = true;
 			}
@@ -62,20 +84,21 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 
 			if(!$.isEmptyObject($scope.errors)) return;
 
+
+			// API CALL
 			var req = {
 				verb : 'addPerson',
 				person : $scope.newPerson
 			}
-			$http.post('api.py', req).then(function(responseHTTP){
-				var response = responseHTTP.data;
-				if(!("error" in response)) {
-					$scope.selected_person = $scope.newPerson;
-					$scope.view = 'viewPerson';
-					$scope.people.push($scope.newPerson.name)
-				}
-			});
+			$scope.callAPI(req, function(response){
+				$scope.selected_person = $scope.newPerson;
+				$scope.view = 'viewPerson';
+				$scope.people.push($scope.newPerson.name)
+			});		
 		}
 		
+
+		// INIT AND LAUNCH APP
 		$scope.init();
 
 

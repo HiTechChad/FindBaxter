@@ -15,13 +15,31 @@ def executeSQL(query):
 		return {"error" : "MySQL Error: %s" % str(e)}
 
 
+#RUN QUERY AND GET ROW
+def get_row(query) :
+
+	# Run Query
+	dbResponse = executeSQL(query)
+	if("error" in dbResponse) : return dbResponse
+
+	# Build Response Object
+	cur = dbResponse["cursor"]
+	columns = tuple( [d[0].decode('utf8') for d in cur.description] ) 
+	for row in cur: 
+		response = dict(zip(columns, row))
+		cur.close() 
+		return response
+
+	return {"error" : "Object Not Found"}
+
+
 
 # RUN QUERY AND RETURN DATA OBJECT
 def get_results(query) :
 
 	# Run Query
 	dbResponse = executeSQL(query)
-	if("error" in dbResponse) : return [dbResponse] 
+	if("error" in dbResponse) : dbResponse
 
 	# Build Response Object
 	cur = dbResponse["cursor"]

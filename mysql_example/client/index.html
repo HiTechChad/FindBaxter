@@ -84,6 +84,10 @@
 				<Button ng-click="addPerson()">SUBMIT</button>
 			</div>
 
+			<div ng-if="view == 'error'">
+				Error: {{error}}
+			</div>
+
 			
 		</div>
 
