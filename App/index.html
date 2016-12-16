@@ -1,0 +1,47 @@
+<html>
+	<head>
+		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+		<link rel="stylesheet" href="style.css"/>
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<meta name="google-signin-client_id" content="499665031209-e3bgaq73dpfg25ohf59hs44r27om22l3.apps.googleusercontent.com">
+		<link href="https://fonts.googleapis.com/css?family=Roboto" rel="style.css">
+	</head>
+	<body>
+		<div class="wrapper" id="wrapper">
+			<!-- PROFILE DISPLAY -->
+			<div class="SideBar" id="side_bar" style="display: block;">
+				<div class="profile" id="profile" style="border-bottom: 4px solid white;display: block;">
+					<img class="profile image" src="" id="myImg" style=""/>
+					<div class="profile name" id="name" style="display:block;"></div>
+					<div class="profile email"id="Email"style="display:block;"></div>
+				</div>
+				<!-- Account Settings -->
+				<div class="settings" id="settings" style="list-style: none; display: block;">
+					<div class="buttons">
+						<li type=""><button class="myButton">Help</button><li>
+						<li type=""><button class="myButton">Settings</button></li>
+						<li type=""><button class="myButton">Account</button></li>
+						<li type=""><button href="#" class="myButton" id="sign_out1" onclick="signOut()" style="display:block;">Sign Out</button></li>
+					</div>
+				</div>
+			</div>
+			<div class="main" id="main" style="display: block">
+				<div class="flexColumn">
+					<!-- Options for Teacher or Student -->
+					<div class="options" id="options" style="display:block;">
+						<div class="information" style="list-style: none;">
+							<li type=""><a href="#">Teacher</a></li>
+							<li type=""><a href="#">Student</a></li>
+							<li type=""><a href="#">Staff</a></li>
+						</div>
+					</div>
+					<div class="Boptions">
+						<div class="content">
+						
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

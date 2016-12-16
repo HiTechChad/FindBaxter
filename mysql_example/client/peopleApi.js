@@ -72,7 +72,9 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 			if($scope.newPerson.name == ""){
 				$scope.errors.name = true;
 			}
-
+			if($scope.newPerson.pic == ""){
+				$scope.errors.pic = true;
+			}
 			if($scope.newPerson.email == ""){
 				$scope.errors.email = true;
 			}

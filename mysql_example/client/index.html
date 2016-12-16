@@ -78,6 +78,8 @@
 				<br /><br />
 				<input placeholder="Name" ng-model="newPerson.name" ng-class="{error: errors.name}" />
 				<br /><br />
+				<input type="file" ng-model="newPerson.pic" ng-class="{error: errors.pic}" />
+				<br /><br />
 				<input placeholder="Email" ng-model="newPerson.email" ng-class="{error: errors.email}" />
 				<p ng-if="errors.badEmail" class="badEmail">BAD EMAIL!!!! YOU SHOULD BE ASHAMED</p>
 				<br /><br />
