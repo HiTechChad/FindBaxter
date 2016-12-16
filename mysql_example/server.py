@@ -43,7 +43,7 @@ def application(environ, start_response):
     		("Access-Control-Allow-Origin", "*")
 		]
 		start_response('200 OK', headers)
-		return [json.dumps(response)]
+		return [json.dumps(response, indent=5)]
 
 
 
