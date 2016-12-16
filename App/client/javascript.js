@@ -61,13 +61,13 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 		// Fetch Everyone by name
 		$scope.fetchEveryone = function(){
 			var req = {
-				verb: 'getPeople'
-				names : $scope.people 
+				verb: 'getPeople',
+				names: $scope.people 
 			}
 			
 			$scope.callAPI(req, function(response){
 				$scope.people = response;
-			}
+			});
 		}
 
 		// ADD PERSON
