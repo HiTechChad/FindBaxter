@@ -179,12 +179,10 @@ body { height: 100%; width: 100%;	background: #dddad6; font-family: 'Roboto', sa
 	border: 4px solid white;
 }
 .boptions {
-	background: white;
 	padding: 4px;
 
 	flex-grow: 1;
 }
 .content {
-	background: #c9c9c9;
 	height: 100%;
 }
