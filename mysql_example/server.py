@@ -8,7 +8,7 @@ monkey.patch_all() # makes many blocking calls asynchronous
 
 
 # import application objects
-sys.path.insert(0, '../config') # moved outside repo to be system-specific
+sys.path.insert(0, '../../config') # moved outside repo to be system-specific
 import config, website, database, model
 
 

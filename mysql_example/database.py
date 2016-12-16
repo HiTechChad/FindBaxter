@@ -34,7 +34,7 @@ def get_row(query) :
 
 
 
-# RUN QUERY AND RETURN DATA OBJECT
+# RUN QUERY AND RETURN LIST
 def get_results(query) :
 
 	# Run Query
