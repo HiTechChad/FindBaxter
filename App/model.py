@@ -25,7 +25,7 @@ class AppModel:
 	]
 	'''
 	def getPeople(model, request):
-		query = "SELECT * FROM users"
+		query = "SELECT name, email FROM users"
 		return database.get_results(query)
 		
 		
