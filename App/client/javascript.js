@@ -25,6 +25,7 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 				name : "",
 				email : "",
 			}
+			$scope.fetchEveryone();
 		}
 
 
@@ -67,8 +68,7 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 		// Fetch Everyone by name
 		$scope.fetchEveryone = function(){
 			var req = {
-				verb: 'getPeople',
-				names: $scope.Allusers 
+				verb: 'getPeople'
 			}
 			
 			$scope.callAPI(req, function(response){
