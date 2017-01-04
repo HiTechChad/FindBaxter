@@ -88,12 +88,12 @@
 						<div class="content bs-component">
 							<table class="table table-striped table-hover ">
 								<tbody>
-									<tr>
-										<td>
-											<img src="/images/rob.jpg" style="height: 50px; width: 50px; border-radius: 100px;"/>
-										</td>
-										<td>Teacher name</td>
-										<td>baxter2017@baxter-academy.org</td>
+								<Button ng-click="fetchEveryone();">click</Button>
+								
+									<tr ng-repeat="user in all_users">
+										<td><img src="/images/{{user.pic}}" style="height: 50px; width: 50px; border-radius: 100px;"/></td>
+										<td>{{user.name}}</td>
+										<td>{{user.email}}</td>
 										<td>
 											<select ng-change="" ng-model="selectedMeeting">
 											<option value="">Select Meeting Type...</option>
@@ -102,93 +102,7 @@
 										</td>
 										<td><button>request</button></td>
 									</tr>
-									<tr>	
-										<td>
-											<img src="/images/rob.jpg" style="height: 50px; width: 50px; border-radius: 100px;"/>
-										</td>
-										<td>Teacher name</td>
-										<td>baxter2017@baxter-academy.org</td>
-										<td>
-											<select ng-change="" ng-model="selectedMeeting">
-											<option value="">Select Meeting Type...</option>
-											<option ng-repeat="meeting in meetings">{{meeting}}</option>
-											</select>
-										</td>
-										<td><button>request</button></td>
-									</tr>
-									<tr>
-										<td>
-											<img src="/images/rob.jpg" style="height: 50px; width: 50px; border-radius: 100px;"/>
-										</td>
-										<td>Teacher name</td>
-										<td>baxter2017@baxter-academy.org</td>
-										<td>
-											<select ng-change="" ng-model="selectedMeeting">
-											<option value="">Select Meeting Type...</option>
-											<option ng-repeat="meeting in meetings">{{meeting}}</option>
-											</select>
-										</td>
-										<td><button>request</button></td>
-									</tr>
-									<tr>
-										<td>
-											<img src="/images/rob.jpg" style="height: 50px; width: 50px; border-radius: 100px;"/>
-										</td>	
-										<td>Teacher name</td>
-										<td>baxter2017@baxter-academy.org</td>
-										<td>
-											<select ng-change="" ng-model="selectedMeeting">
-											<option value="">Select Meeting Type...</option>
-											<option ng-repeat="meeting in meetings">{{meeting}}</option>
-											</select>
-										</td>
-										<td><button>request</button></td>
-									</tr>
-									<tr>
-										<td>
-											<img src="/images/rob.jpg" style="height: 50px; width: 50px; border-radius: 100px;"/>
-										</td>
-										<td>Teacher name</td>
-										<td>baxter2017@baxter-academy.org</td>
-										<td>
-											<select ng-change="" ng-model="selectedMeeting">
-											<option value="">Select Meeting Type...</option>
-											<option ng-repeat="meeting in meetings">{{meeting}}</option>
-											</select>
-										</td>
-										<td><button>request</button></td>
-									</tr>
-									<tr>
-										<td>
-											<img src="/images/rob.jpg" style="height: 50px; width: 50px; border-radius: 100px;"/>
-										</td>
-										<td>Teacher name</td>
-										<td>baxter2017@baxter-academy.org</td>
-										<td>
-											<select ng-change="" ng-model="selectedMeeting">
-											<option value="">Select Meeting Type...</option>
-											<option ng-repeat="meeting in meetings">{{meeting}}</option>
-											</select>
-										</td>
-										<td><button>request</button></td>
-									</tr>
-									<tr>
-										<td>
-											<img src="/images/rob.jpg" style="height: 50px; width: 50px; border-radius: 100px;"/>
-										</td>
-										<td>Teacher name</td>
-										<td>baxter2017@baxter-academy.org</td>
-										<td>
-											<select ng-change="" ng-model="selectedMeeting">
-											<option value="">Select Meeting Type...</option>
-											<option ng-repeat="meeting in meetings">{{meeting}}</option>
-											</select>
-										</td>
-										<td><button>request</button></td>
-									</tr>
-									<tr>
 									
-									</tr>
 								</tbody>
 							</table>
 

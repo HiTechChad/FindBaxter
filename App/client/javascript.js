@@ -68,11 +68,12 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 		$scope.fetchEveryone = function(){
 			var req = {
 				verb: 'getPeople',
-				names: $scope.people 
+				names: $scope.Allusers 
 			}
 			
 			$scope.callAPI(req, function(response){
-				$scope.people = response;
+				$scope.all_users = response;
+				$scope.view = 'viewPerson'
 			});
 		}
 
