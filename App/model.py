@@ -4,13 +4,13 @@ class AppModel:
 
 	def getPerson(model, request):
 		name = request["name"]
-		query = "SELECT * FROM users where name='{}' LIMIT 1".format(name)
+		query = "SELECT * FROM teachers where name='{}' LIMIT 1".format(name)
 		return database.get_row(query)
 		
 
 	def addPerson(model, request):
 		person = request["person"]
-		return database.insertObj(person, "users")
+		return database.insertObj(person, "teachers")
 
 		
 	'''
@@ -25,7 +25,7 @@ class AppModel:
 	]
 	'''
 	def getPeople(model, request):
-		query = "SELECT name, pic, email FROM users"
+		query = "SELECT name, pic, email FROM teachers"
 		return database.get_results(query)
 		
 		
