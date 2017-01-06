@@ -112,11 +112,11 @@
 										<td>{{user.email}}</td>
 										<td>
 											<select ng-change="" ng-model="selectedMeeting">
-											<option value="">Select Meeting Type...</option>
-											<option ng-repeat="meeting in meetings">{{meeting}}</option>
+												<option value="">Select Meeting Type...</option>
+												<option ng-repeat="meeting in meetings">{{meeting}}</option>
 											</select>	
 										</td>
-										<td><button ng-click="ReqMeeting();">request</button></td>
+										<td><button ng-click="ReqMeeting(user.name, meeting);">request</button></td>
 									</tr>
 									<div>
 									</div>

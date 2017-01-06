@@ -1,4 +1,4 @@
-import database
+import database, twiliow, json, recieve
 
 class AppModel:
 
@@ -30,9 +30,15 @@ class AppModel:
 		
 	def sendTxt(model, request):
 		name = request["name"]
-		Meeting = request["type"]
+		meeting = request["mtype"]
 		query = "SELECT telephone FROM teachers where name='{}' LIMIT 1".format(name)
-		return database.get_row(query)
-
-		
+		number = database.get_results(query)
+		telephone = number[0]['telephone']
+		message = twiliow.MessageUser(telephone, meeting)
+		response = {"":""}
+		if(message):
+			response = {"message": "Message Sent"}
+		else:
+			response = {"error": "Message Not Sent"}
+		return response
 		
