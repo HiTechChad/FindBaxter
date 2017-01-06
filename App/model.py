@@ -30,6 +30,7 @@ class AppModel:
 		
 	def sendTxt(model, request):
 		name = request["name"]
+		Meeting = request["type"]
 		query = "SELECT telephone FROM teachers where name='{}' LIMIT 1".format(name)
 		return database.get_row(query)
 

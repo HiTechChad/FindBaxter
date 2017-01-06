@@ -44,7 +44,7 @@
 
 		<!-- APP -->
 		<script>
-			var loadStatic = true;			
+			var loadStatic = false;			
 		</script>
 		<script src="staticData.js"></script>
 
@@ -116,10 +116,10 @@
 											<option ng-repeat="meeting in meetings">{{meeting}}</option>
 											</select>	
 										</td>
-										<td><button ng-click="ReqMeeting();" ng-model="reqName">request</button></td>
+										<td><button ng-click="ReqMeeting();">request</button></td>
 									</tr>
 									<div>
-									</div
+									</div>
 								</tbody>
 							</table>
 
