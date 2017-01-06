@@ -28,4 +28,10 @@ class AppModel:
 		query = "SELECT name, pic, email FROM teachers"
 		return database.get_results(query)
 		
+	def sendTxt(model, request):
+		name = request["name"]
+		query = "SELECT telephone FROM teachers where name='{}' LIMIT 1".format(name)
+		return database.get_row(query)
+
+		
 		

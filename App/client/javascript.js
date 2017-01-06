@@ -3,7 +3,7 @@ var app = angular.module('peopleApiApp', []);
 app.controller('peopleApiCtrl', ['$scope', '$http',
 	function($scope, $http){
 
-
+		window.$scope = $scope;
 
 		// INITIATLIZE VARIABLES ON LOAD
 
@@ -26,6 +26,12 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 				email : "",
 			}
 			$scope.fetchEveryone();
+
+
+			$scope.all_users = [];
+			if('all_users' in staticData){
+				$scope.all_users = staticData.all_users;
+			}
 		}
 
 
@@ -65,6 +71,7 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 				$scope.view = 'viewPerson'
 			});		
 		}
+		
 		// Fetch Everyone by name
 		$scope.fetchEveryone = function(){
 			var req = {
@@ -76,7 +83,19 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 				$scope.view = 'viewPerson'
 			});
 		}
-
+		
+		//MEETING REQUEST
+		$scope.ReqMeeting = function(){
+			var req = {
+				verb:'sendTxt',
+				name: $scope.reqName
+			}
+			$scope.callAPI(req, function(){
+				$scope.number = response;
+				$scope.view = 'viewPerson'
+			});
+		}
+		
 		// ADD PERSON
 		$scope.addPerson = function(){
 

@@ -43,9 +43,14 @@
 		
 
 		<!-- APP -->
+		<script>
+			var loadStatic = true;			
+		</script>
+		<script src="staticData.js"></script>
+
 		<link rel="stylesheet" href="style.css"/>
 		<script src="javascript.js"></script>
-
+		
 	</head>
 	<body ng-app="peopleApiApp" ng-controller="peopleApiCtrl">
 		<div class="wrapper" id="wrapper">
@@ -56,6 +61,7 @@
 				<option value="">Select a person...</option>
 				<option ng-repeat="person in people">{{person}}</option>
 			</select>	
+
 				<div class="profile" id="profile" style="border-bottom: 4px solid white;display: block;">
 					<img class="profile image" ng-src="images/{{selected_person.pic}}" id="myImg" style=""/>
 					<div class="profile name" id="name" style="display:block;">{{selected_person.name}}</div>
@@ -85,13 +91,19 @@
 					</div>
 
 					<div class="Boptions">
+						
+						
+						<button onclick="ReqMeeting()">CLICK</button>
+						
+						
+						
 						<div class="content">
 						<div class="content bs-component">
 							<table class="table table-striped table-hover ">
 								<tbody class="tbody">
 									<tr ng-repeat="user in all_users">
 										<td ng-if="user.pic">
-											<img ng-src="/images/{{user.pic}}" style="height: 50px; width: 50px; border-radius: 100px;"/>
+											<img ng-src="images/{{user.pic}}" style="height: 50px; width: 50px; border-radius: 100px;"/>
 										</td>
 										<td ng-if="user.pic == null">
 											<img src="/images/sentiment.png" style="height: 50px; width 50px;"></img>
@@ -104,7 +116,7 @@
 											<option ng-repeat="meeting in meetings">{{meeting}}</option>
 											</select>	
 										</td>
-										<td><button>request</button></td>
+										<td><button ng-click="ReqMeeting();" ng-model="reqName">request</button></td>
 									</tr>
 									<div>
 									</div>
