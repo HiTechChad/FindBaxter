@@ -32,6 +32,10 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 			if('all_users' in staticData){
 				$scope.all_users = staticData.all_users;
 			}
+			if('currentUser' in staticData){
+				$scope.currentUser = staticData.currentUser;
+			}
+
 		}
 
 
@@ -85,7 +89,8 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 		}
 		
 		//MEETING REQUEST
-		$scope.ReqMeeting = function(){
+		$scope.ReqMeeting = function(user){
+
 			var req = {
 				verb:'sendTxt',
 				name: $scope.reqName

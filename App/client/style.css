@@ -30,7 +30,6 @@ body { height: 100%; width: 100%;	background: #dddad6; font-family: 'Roboto', sa
 .profile {
 	max-width: 100%;
 	background: #9ad3de;
-	display: flex;
 }
 .profile.image {
 	height: 100px;
