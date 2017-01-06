@@ -93,7 +93,7 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 
 			var req = {
 				verb:'sendTxt',
-				name: $scope.user.name
+				name: $scope.user.name,
 				type: $scope.meetingType
 			}
 			$scope.callAPI(req, function(){
