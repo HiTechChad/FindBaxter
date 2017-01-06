@@ -91,6 +91,12 @@
 					</div>
 
 					<div class="Boptions">
+						
+						
+						<button onclick="ReqMeeting()">CLICK</button>
+						
+						
+						
 						<div class="content">
 						<div class="content bs-component">
 							<table class="table table-striped table-hover ">
@@ -110,7 +116,7 @@
 											<option ng-repeat="meeting in meetings">{{meeting}}</option>
 											</select>	
 										</td>
-										<td><button>request</button></td>
+										<td><button ng-click="ReqMeeting();" ng-model="reqName">request</button></td>
 									</tr>
 									<div>
 									</div

@@ -71,6 +71,7 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 				$scope.view = 'viewPerson'
 			});		
 		}
+		
 		// Fetch Everyone by name
 		$scope.fetchEveryone = function(){
 			var req = {
@@ -82,7 +83,19 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 				$scope.view = 'viewPerson'
 			});
 		}
-
+		
+		//MEETING REQUEST
+		$scope.ReqMeeting = function(){
+			var req = {
+				verb:'sendTxt',
+				name: $scope.reqName
+			}
+			$scope.callAPI(req, function(){
+				$scope.number = response;
+				$scope.view = 'viewPerson'
+			});
+		}
+		
 		// ADD PERSON
 		$scope.addPerson = function(){
 
