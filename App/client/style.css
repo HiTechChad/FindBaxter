@@ -170,6 +170,7 @@ body { height: 100%; width: 100%;	background: #dddad6; font-family: 'Roboto', sa
 	height:100%;
 	flex-direction: column;
 	display: flex;
+	overflow-y: auto;
 }
 .options {
 	flex: 0 0 60px;
@@ -179,9 +180,11 @@ body { height: 100%; width: 100%;	background: #dddad6; font-family: 'Roboto', sa
 }
 .boptions {
 	padding: 4px;
-
+	
 	flex-grow: 1;
 }
 .content {
 	height: 100%;
+}
+.table{
 }
