@@ -32,10 +32,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userId`, `name`, `pic`, `email`) VALUES
-(1, 'Dawson Spencer', 'dawson.jpg', 'dawson@b.com'),
-(2, 'Rob Korobkin', 'rob.jpg', 'rob@b.com'),
-(3, 'Simon Hergenhan', 'simon.jpg', 'simon@b.com'),
-(4, 'Adam Gilman', 'gilman.jpg', 'gilman@b.com');
+(1, 'Dawson Spencer', 'dawson.jpg', 'dawson@b.com');
 
 --
 -- Indexes for dumped tables
