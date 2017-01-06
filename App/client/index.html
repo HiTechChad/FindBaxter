@@ -43,9 +43,14 @@
 		
 
 		<!-- APP -->
+		<script>
+			var loadStatic = true;			
+		</script>
+		<script src="staticData.js"></script>
+
 		<link rel="stylesheet" href="style.css"/>
 		<script src="javascript.js"></script>
-
+		
 	</head>
 	<body ng-app="peopleApiApp" ng-controller="peopleApiCtrl">
 		<div class="wrapper" id="wrapper">
@@ -56,6 +61,7 @@
 				<option value="">Select a person...</option>
 				<option ng-repeat="person in people">{{person}}</option>
 			</select>	
+
 				<div class="profile" id="profile" style="border-bottom: 4px solid white;display: block;">
 					<img class="profile image" ng-src="images/{{selected_person.pic}}" id="myImg" style=""/>
 					<div class="profile name" id="name" style="display:block;">{{selected_person.name}}</div>
@@ -92,7 +98,7 @@
 								<Button ng-click="fetchEveryone();">click</Button>
 									<tr ng-repeat="user in all_users">
 										<td ng-if="user.pic">
-											<img ng-src="/images/{{user.pic}}" style="height: 50px; width: 50px; border-radius: 100px;"/>
+											<img ng-src="images/{{user.pic}}" style="height: 50px; width: 50px; border-radius: 100px;"/>
 										</td>
 										<td ng-if="user.pic == ''">
 											<i class="material-icons" style="font-size: 50px">sentiment_very_satisfied</i>

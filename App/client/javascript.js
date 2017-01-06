@@ -3,7 +3,7 @@ var app = angular.module('peopleApiApp', []);
 app.controller('peopleApiCtrl', ['$scope', '$http',
 	function($scope, $http){
 
-
+		window.$scope = $scope;
 
 		// INITIATLIZE VARIABLES ON LOAD
 
@@ -26,6 +26,12 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 				email : "",
 			}
 			$scope.fetchEveryone();
+
+
+			$scope.all_users = [];
+			if('all_users' in staticData){
+				$scope.all_users = staticData.all_users;
+			}
 		}
 
 
