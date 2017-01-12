@@ -106,7 +106,7 @@
 										<td ng-if="user.pic">
 											<img ng-src="images/{{user.pic}}" style="height: 50px; width: 50px; border-radius: 100px;"/>
 										</td>
-										<td ng-if="user.pic == null">
+										<td ng-if="user.pic == ''">
 											<img src="/images/sentiment.png" style="height: 50px; width 50px;"></img>
 										</td>
 										<td>{{user.name}}</td>
