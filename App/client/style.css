@@ -188,9 +188,10 @@ body { height: 100%; width: 100%;	background: #dddad6; font-family: 'Roboto', sa
 .table{
 }
 .searchbar{
-	width: 750px; 
+	width: 23342342343434234234234233242342332px; 
 	height: 15px;
 	margin-top: 20px;
 	border:solid 1px #ccc;
 	margin-left: 200px;
+	max-height: 15px;
 }
