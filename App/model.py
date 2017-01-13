@@ -30,15 +30,8 @@ class AppModel:
 		
 	def sendTxt(model, request):
 		name = request["name"]
-		meeting = request["mtype"]
+		meeting = request["type"]
 		query = "SELECT telephone FROM teachers where name='{}' LIMIT 1".format(name)
-		number = database.get_results(query)
-		telephone = number[0]['telephone']
-		message = twiliow.MessageUser(telephone, meeting)
-		response = {"":""}
-		if(message):
-			response = {"message": "Message Sent"}
-		else:
-			response = {"error": "Message Not Sent"}
-		return response
+		twiliow.MessageUser(database.get_results(query)['telephone'], type)
+
 		

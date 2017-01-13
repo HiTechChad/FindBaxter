@@ -85,12 +85,11 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 		}
 		
 		//MEETING REQUEST
-		$scope.ReqMeeting = function(username, mtype){
+		$scope.ReqMeeting = function(username){
 			var req = {
 				verb:'sendTxt',
 				name: username,
-				mtype: $scope.selectedMeeting,
-				type: mtype
+				type: $scope.selectedMeeting
 			}
 			var callback = function(response){
 				$scope.number = response;
