@@ -4,7 +4,7 @@ var staticData = {};
 if(loadStatic){
 
 	var currentUser = {
-		name : 'Alex Newton',
+		name : 'Ryan Tarling',
 		email : 'Ryan.Tarling@baxter-academy.org',
 		pic : 'ryan.jpg',
 		gender:'M'
