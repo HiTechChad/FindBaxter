@@ -3,6 +3,16 @@ var staticData = {};
 
 if(loadStatic){
 
+	var currentUser = {
+		name : 'Ryan Tarling',
+		email : 'Ryan.Tarling@baxter-academy.org',
+		pic : 'ryan.jpg',
+		gender:'M'
+	}
+
+
+	staticData.currentUser = currentUser;
+
 	staticData.all_users = [
 	     {
 	          "pic": "dawson.jpg", 

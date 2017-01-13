@@ -32,6 +32,10 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 			if('all_users' in staticData){
 				$scope.all_users = staticData.all_users;
 			}
+			if('currentUser' in staticData){
+				$scope.currentUser = staticData.currentUser;
+			}
+
 		}
 
 
