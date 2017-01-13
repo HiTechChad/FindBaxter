@@ -89,17 +89,17 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 		}
 		
 		//MEETING REQUEST
-		$scope.ReqMeeting = function(user){
-
+		$scope.ReqMeeting = function(username){
 			var req = {
 				verb:'sendTxt',
-				name: $scope.user.name,
-				type: $scope.meetingType
+				name: username,
+				type: $scope.selectedMeeting
 			}
-			$scope.callAPI(req, function(){
+			var callback = function(response){
 				$scope.number = response;
 				$scope.view = 'viewPerson'
-			});
+			}
+			$scope.callAPI(req, callback);
 		}
 		
 		// ADD PERSON

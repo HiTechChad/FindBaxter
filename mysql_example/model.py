@@ -3,13 +3,16 @@ import database
 class AppModel:
 
 	def getPerson(model, request):
-		name = request["name"]
-		query = "SELECT * FROM users where name='{}' LIMIT 1".format(name)
-		return database.get_row(query)
+		if "name" in request :
+			name = request["name"]
+			query = "SELECT * FROM users where name='{}' LIMIT 1".format(name)
+			return database.get_row(query)
+
+		return {"error" : "Request Error: No name requested"}
 		
 
 	def addPerson(model, request):
-		if (!("person" in request)) :
+		if request.hasAttr(request, "person") == False :
 			return {"error" : "Request Error: No person requested"}
 		person = request["person"]
 		return database.insertObj(person, "users")
