@@ -92,11 +92,13 @@
 
 					<div class="Boptions">
 					
-						
-						
-						<input style=" width: 100%; height: 15px; border:solid 1px #ccc; ">
-						</input>	
-						
+						<!-- Searchbar -->
+						<div class="searchContainer">
+							<input  placeholder="Search..." type="search" />	
+						</div>	
+
+							<input type="button"/>
+							click for robs disapointment				
 						
 						<div class="content">
 						<div class="content bs-component">
@@ -107,9 +109,9 @@
 											<img ng-src="images/{{user.pic}}" style="height: 50px; width: 50px; border-radius: 100px;"/>
 										</td>
 										<td ng-if="user.pic == ''">
-											<img src="/images/sentiment.png" style="height: 50px; width 50px;"></img>
+											<img src="/images/sentiment.png" style="height: 50px; width: 50px;"></img>
 										</td>
-										<td>{{user.name}}</td>
+										<td>{{user.name}}</td> 
 										<td>{{user.email}}</td>
 										<td>
 											<select ng-change="" ng-model="selectedMeeting">
