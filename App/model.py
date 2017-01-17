@@ -25,26 +25,26 @@ class AppModel:
 	]
 	'''
 	def getPeople(model, request):
-		query = "SELECT name, pic, email FROM users"
+		query = "SELECT userId, name, pic, email FROM users"
 		return database.get_results(query)
 		
 	def sendTxt(model, request):
-		username = ['username']
-		authToken = ['authToken']
+		username = request['username']
+		authToken = request['authToken']
 		name = request["name"]
 		meeting = request["type"]
 		checkUser = "SELECT * FROM users where name='{}' LIMIT 1".format(username)
-		if(checkUser['auth'] = authToken):
-			database.get_row(checkUser)
+		if(database.get_row(checkUser)['authToken'] == str(authToken)):
 			query = "SELECT telephone FROM users where name='{}' LIMIT 1".format(name)
-			twiliow.MessageUser(database.get_results(query)['telephone'], type)
+			return twiliow.MessageUser(database.get_results(query)[0]['telephone'], meeting, username)
 		else:
 			return {"error":"failed to authenticate"}
-	def UpdateAuth(modle, request):
+
+'''	def UpdateAuth(modle, request):
 		name = request["name"]
 		authToken = ['authToken']
 		query = "SELECT * FROM users where name='{}' LIMIT 1".format(name)
 		if(database.get_row(query) != {"error" : "Object Not Found"}):
 			return database.insertObj(person, "users")
-
+'''
 		
