@@ -200,3 +200,9 @@ body { height: 100%; width: 100%;	background: #dddad6; font-family: 'Roboto', sa
 	 border:solid 1px #ccc; 
 	 padding: 5px 12px; 
 }
+
+.searchbutton{
+	margin-bottom: 1000px;
+	width: 55px;
+	height: 25px;
+}
