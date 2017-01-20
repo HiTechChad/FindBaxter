@@ -138,3 +138,45 @@ getPeople
 	]
 	
 	
+
+getEveryone
+
+{"verb":"fetchAll"]
+
+
+response
+{ 
+	[
+		"name":"dawson",
+		"email":"dawson@gmail.com",
+		"pic":"dawson.png",
+		"userId":"1"
+	],
+	[
+		"name":"rob",
+		"email":"rob@gmail.com",
+		"pic":"rob.png",
+		"userId":"2"
+	],
+}
+
+getPerson
+
+{
+	"verb":"getPerson",
+	"person":"personName"
+}
+
+
+response
+{
+	"name":"Dawson"
+	"email":"dawson@gmail.com"
+	"pic":"dawson.png"
+	"userId:"1"
+}
+	
+
+
+
+

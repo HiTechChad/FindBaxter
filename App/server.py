@@ -22,9 +22,12 @@ def application(environ, start_response):
 
 	# handle POST api requests
 	if environ["REQUEST_METHOD"] == "POST": 
-
+		r = {"verb":""}
 		# get input
-		r = json.loads(environ["wsgi.input"].read())
+		try:
+			r = json.loads(environ["wsgi.input"].read())
+		except ValueError as e:
+			print e
 		if "verb" in r : 
 			v = r["verb"]
 			m = model.AppModel()
