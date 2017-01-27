@@ -9,6 +9,6 @@ def MessageUser(telephone, type, user):
 		message = client.messages.create(body=str(user)+ " has requested a " + str(type) + " meeting with you.",
 			to=telephone,
 			from_="+17865654843") # Replace with your Twilio number
-		return {"message": "Message Sent"}
+		return True
 	except TwilioRestException as e:
 		return(e)

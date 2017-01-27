@@ -22,6 +22,10 @@ def application(environ, start_response):
 
 	# handle POST api requests
 	if environ["REQUEST_METHOD"] == "POST": 
+				
+
+	
+	
 		r = {"verb":""}
 		# get input
 		try:

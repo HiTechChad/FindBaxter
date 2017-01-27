@@ -118,7 +118,7 @@ getPeople
 	]
 	
 	
-
+----------------------------------------------------
 getEveryone
 
 {"verb":"fetchAll"]
@@ -139,7 +139,7 @@ response
 		"userId":"2"
 	],
 }
-
+-----------------------------------------
 getPerson
 
 {
@@ -150,13 +150,61 @@ getPerson
 
 response
 {
-	"name":"Dawson"
-	"email":"dawson@gmail.com"
-	"pic":"dawson.png"
+	"name":"Dawson",
+	"email":"dawson@gmail.com",
+	"pic":"dawson.png",
 	"userId:"1"
 }
-	
+-----------------------------------------
+addperson
+
+{
+	"verb":"addPerson",
+	"name":"Dawson Spencer",
+	"email":"dawson@gmail.com",
+	"pic":"dawson.png",
+}
+
+response
+{
+	"sucsess":"person added"
+}
+------------------------------------------
+authenticate
+
+{
+	"verb":"authenticate",
+	"name":"dawson spencer",
+	"authToken":"2017"
+}
+
+response
+
+{
+	"succsess":"authentication sucsessfull"
+}
+--------------------------------------------------
+
+Request meeting
+
+{
+	"verb":"sendTxt",
+	"userRequsting":"dawson",
+	"who":"rob",
+	"howLong":"short",
+	"authToken":"2017"	
+}
 
 
+
+twiliow.sendMessage(userRequesting, database(querey name), howLong)
+
+
+response
+
+{
+	"sucsess":"message sent"
+}
+----------------------------------------------------
 
 
