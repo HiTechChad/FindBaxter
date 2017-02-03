@@ -1,7 +1,7 @@
 
 
 #import system libs
-import mysql.connector, os, json, sys
+import mysql.connector, os, json, sys, twiliow
 from gevent.pywsgi import WSGIServer
 from gevent import monkey
 from cgi import parse_qs, escape
@@ -38,9 +38,24 @@ def application(environ, start_response):
 
 			# DO SOMETHING WITH r
 			# ...
+			if r["AccountSid"][0] == "ACd37c9f284658c4b14ed1878a1b4f7feb":
+				number = r["From"][0].split('+')[1]
+				print number
+				findFromUser = "SELECT * FROM users where telephone='{}' LIMIT 1".format(number)
+				usercheck = database.get_row(findFromUser)
+				try:
+					checkRequest = "SELECT * FROM requests where toUserId='{}' LIMIT 1".format(usercheck['userId'])
+					check = database.get_row(checkRequest)
+					if check['responded'] == "false":
+						id = "SELECT * FROM users where userId='{}' LIMIT 1".format(check['fromUserId'])
+						pulluser = database.get_row(id)
+						response = twiliow.Notify(str(pulluser['telephone']), usercheck['name'], r["Body"][0])
+				except ValueError as e:
+					print e
 
+			
 			# IS THERE A RESPONSE?
-			response = r
+			
 
 		else :
 
@@ -49,6 +64,7 @@ def application(environ, start_response):
 				r = json.loads(environ["wsgi.input"].read())
 			except ValueError as e:
 				print e
+			r = {"verb":""}
 			if "verb" in r : 
 				v = r["verb"]
 				m = model.AppModel()

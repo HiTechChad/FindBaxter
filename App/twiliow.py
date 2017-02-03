@@ -12,3 +12,12 @@ def MessageUser(telephone, type, user):
 		return True
 	except TwilioRestException as e:
 		return(e)
+def Notify(telephone, user, response):
+	client = TwilioRestClient(account_sid, auth_token)
+	try:
+		message = client.messages.create(body=str(user) + " has responded to your request with " + str(response),
+			to="+"+telephone,
+			from_="+17865654843") # Replace with your Twilio number
+		return True
+	except TwilioRestException as e:
+		return(e)
