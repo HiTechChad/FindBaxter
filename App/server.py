@@ -60,14 +60,17 @@ def application(environ, start_response):
 		else :
 
 			# get input
+			httpReq = environ["wsgi.input"].read()
 			try:
-				r = json.loads(environ["wsgi.input"].read())
+				r = json.loads(httpReq, strict=False)
+				
 			except ValueError as e:
-				print e
-			r = {"verb":""}
+				response = { "error" : "Bad JSON! Bad!"}
+				r = {}	
 			if "verb" in r : 
 				v = r["verb"]
 				m = model.AppModel()
+				
 				if v in dir(m): 
 				 	response = getattr(m, v)(r) #do this shit!
 				else:
