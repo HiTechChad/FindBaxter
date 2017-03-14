@@ -62,19 +62,13 @@ class AppModel:
 			checkTimeStamp = database.get_row(checkQuery)
 			currentTime = int(time.time())
 			waitTime = int(checkTimeStamp['time']) + 300 - currentTime
-			print waitTime
 			#loggedTime = datetime.datetime.strptime(checkTimeStamp['time'][:-6], '%Y-%m-%d %H:%M:%S')
-			print currentTime
-			print checkTimeStamp['time']
 			if checkTimeStamp['Status'] == "Active":
 				if currentTime > int(checkTimeStamp['time']) + 300:
 					updateLog = "UPDATE requests SET Status='Closed' where requestId='{}'".format(checkTimeStamp['requestId'])
-					print updateLog
 					database.executeSQL(updateLog)
-					print "YESSSSSS"
 					noReqs = True
 				else:
-					print "noooo"
 					noReqs = False
 					
 			else:
@@ -89,7 +83,7 @@ class AppModel:
 					"time":int(time.time()),
 					"responded":"false",
 					"twilioMessageSid": twiliowResp[1],
-					"metaDataJSON":"null"
+					"metaDataJSON":request
 				}	
 				database.insertObj(logRequest, "requests")
 				return {"Sucsess":"message sent"}
@@ -98,3 +92,22 @@ class AppModel:
 		else:
 			return {"error":"please wait till teacher responds or ticket expires "+ str(waitTime)}
 		#print database.insertObj(logRequest, "requests")
+		
+		
+	def MessageResponse(model, request):
+		number = request["From"][0].split('+')[1]
+		print number
+		findFromUser = "SELECT * FROM users where telephone='{}' LIMIT 1".format(number)
+		usercheck = database.get_row(findFromUser)
+		try:
+			checkRequest = "SELECT * FROM requests where toUserId='{}' and Status='Active' LIMIT 1".format(usercheck['userId'])
+			check = database.get_row(checkRequest)
+			if check['responded'] == "false":
+				id = "SELECT * FROM users where userId='{}' LIMIT 1".format(check['fromUserId'])
+				pulluser = database.get_row(id)
+				response = twiliow.Notify(str(pulluser['telephone']), usercheck['name'], request["Body"][0])
+				updateLogs = "UPDATE requests SET Status='Closed', responded='true', response='{}' where requestId='{}'".format(request["body"][0],check['requestId'])
+				print updateLogs
+				database.executeSQL(updateLogs)
+		except ValueError as e:
+			print e
