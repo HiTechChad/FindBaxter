@@ -281,5 +281,12 @@ body { height: 100%; width: 100%;	background: #dddad6; font-family: 'Roboto', sa
 	padding-left:25px;
 	width:350px;height:55px;
 	text-decoration:underline;
-	margin:90px;
+	margin-left:160px;
+}
+.underlined_text{
+	float:center;
+	font-size:25px;
+	padding-left:25px;
+	width:350px;height:55px;
+	margin:20px;
 }
