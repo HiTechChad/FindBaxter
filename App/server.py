@@ -1,7 +1,7 @@
 
 
 #import system libs
-import mysql.connector, os, json, sys
+import mysql.connector, os, json, sys, twiliow
 from gevent.pywsgi import WSGIServer
 from gevent import monkey
 from cgi import parse_qs, escape
@@ -38,20 +38,35 @@ def application(environ, start_response):
 
 			# DO SOMETHING WITH r
 			# ...
+			if r["AccountSid"][0] == "ACd37c9f284658c4b14ed1878a1b4f7feb": 
+				m = model.AppModel()
+				v = "MessageResponse"
+				if v in dir(m): 
+					response = getattr(m, v)(r) #do this shit!
+				else:
+					response = { "error" : "That action is unavailable."}
 
+				
+			
+
+			
 			# IS THERE A RESPONSE?
-			response = r
+			
 
 		else :
 
 			# get input
+			httpReq = environ["wsgi.input"].read()
 			try:
-				r = json.loads(environ["wsgi.input"].read())
+				r = json.loads(httpReq, strict=False)
+				
 			except ValueError as e:
-				print e
+				response = { "error" : "Bad JSON! Bad!"}
+				r = {}	
 			if "verb" in r : 
 				v = r["verb"]
 				m = model.AppModel()
+				
 				if v in dir(m): 
 				 	response = getattr(m, v)(r) #do this shit!
 				else:

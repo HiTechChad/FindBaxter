@@ -1,9 +1,7 @@
-import json
-
-name = "dawson"
-logRequest = {
-	"name":name,
-	"number":"12"
-}
-
-print logRequest
+def file(number):
+	if number > 5:
+		return (True, number)
+	else:
+		return (False, number)
+		
+print file(10)[1]
