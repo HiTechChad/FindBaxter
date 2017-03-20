@@ -275,18 +275,40 @@ body { height: 100%; width: 100%;	background: #dddad6; font-family: 'Roboto', sa
 	font-weight: bold;
 	font-size:50px;	
 }
-.underlined_button{
-	float:center;
-	font-size:25px;
-	padding-left:25px;
-	width:350px;height:55px;
-	text-decoration:underline;
-	margin-left:160px;
+
+
+.menu {
+	padding-left: 300px;
 }
-.underlined_text{
-	float:center;
-	font-size:25px;
-	padding-left:25px;
-	width:350px;height:55px;
-	margin:20px;
+.menu a {
+	display:block;
+	float:left;
+	color:rgb(38, 38, 38);
+	font-weight:bold;	
+	font-size: 18px;
+	padding: 5px 25px 10px 30px;
+	text-decoration:none
+}
+.menu a.active {
+	border-bottom:solid 5px #000000;
+	padding:5px 3px 0px 5px;
+
+
+}
+
+
+.img_size{
+	height:63px;
+	padding-bottom:10px
+}
+.background_color{
+	background:white;
+	width:100%;
+	height:100%
+}
+			
+.yellowline{
+	border:solid 3px yellow;
+	margin-top: 60px;
+
 }
