@@ -286,16 +286,16 @@ body { height: 100%; width: 100%;	background: #dddad6; font-family: 'Roboto', sa
 	color:rgb(38, 38, 38);
 	font-weight:bold;	
 	font-size: 18px;
-	padding: 5px 25px 10px 30px;
+	padding: 5px 0 15px;
+	margin-right: 55px;
 	text-decoration:none
 }
 .menu a.active {
 	border-bottom:solid 5px #000000;
-	padding:5px 3px 0px 5px;
+	padding:4px 0 2px;
 
 
 }
-
 
 .img_size{
 	height:63px;
@@ -310,5 +310,6 @@ body { height: 100%; width: 100%;	background: #dddad6; font-family: 'Roboto', sa
 .yellowline{
 	border:solid 3px yellow;
 	margin-top: 60px;
+	width:1299px;
 
 }
