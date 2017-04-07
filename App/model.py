@@ -30,7 +30,7 @@ class AppModel:
 			return {"error":"failed to authenticate"}
 
 
-	def Auth(modle, request):
+	def Auth(model, request):
 		name = request["name"]
 		authToken = request['authToken']
 		query = "SELECT * FROM users where name='{}' LIMIT 1".format(name)
@@ -43,7 +43,7 @@ class AppModel:
 		else:
 			return {"true":"user not found"}
 
-	def test(model, request):
+	def SendMessage(model, request):
 		waitTime = 0
 		fromUserName = request['username']
 		toUserName = request["name"]
@@ -53,7 +53,8 @@ class AppModel:
 		toUser = database.get_row(toQuery)
 		fromUser = database.get_row(fromQuery)
 		checkQuery = "SELECT * FROM requests WHERE fromUserId='{}' AND Status='Active' LIMIT 1".format(fromUser['userId'])
-		print checkQuery
+		checkLogs = database.get_results("SELECT COUNT(*) as count FROM requests WHERE Status='Active' AND toUserId='{}'".format(toUser['userId']))
+
 		result = database.get_results(checkQuery)
 		
 		if not result:
@@ -74,21 +75,23 @@ class AppModel:
 			else:
 				noReqs = False
 		if(noReqs):
-			twiliowResp = twiliow.MessageUser(toUser['telephone'], meeting, fromUser['name'])
+			twiliowResp = twiliow.MessageUser(toUser['telephone'], meeting, fromUser['name'], checkLogs[0]['count'])
 			if(twiliowResp[0]):
 				logRequest =  {
 					"fromUserId": fromUser['userId'],
 					"Status":str("Active"),
 					"toUserId": toUser['userId'],
+					"people":checkLogs[0]['count'],
 					"time":int(time.time()),
 					"responded":"false",
+					"Response":" ",
 					"twilioMessageSid": twiliowResp[1],
 					"metaDataJSON":request
 				}	
-				database.insertObj(logRequest, "requests")
-				return {"Sucsess":"message sent"}
+				print database.insertObj(logRequest, "requests")
+				return {"Sucsess":"message sent Keep an eye on your phone for a responses"}
 			else:
-				return twiliowResp[0]
+				return {"error":str(twiliowResp[0])}
 		else:
 			return {"error":"please wait till teacher responds or ticket expires "+ str(waitTime)}
 		#print database.insertObj(logRequest, "requests")
@@ -96,18 +99,20 @@ class AppModel:
 		
 	def MessageResponse(model, request):
 		number = request["From"][0].split('+')[1]
-		print number
-		findFromUser = "SELECT * FROM users where telephone='{}' LIMIT 1".format(number)
-		usercheck = database.get_row(findFromUser)
-		try:
-			checkRequest = "SELECT * FROM requests where toUserId='{}' and Status='Active' LIMIT 1".format(usercheck['userId'])
-			check = database.get_row(checkRequest)
-			if check['responded'] == "false":
-				id = "SELECT * FROM users where userId='{}' LIMIT 1".format(check['fromUserId'])
-				pulluser = database.get_row(id)
-				response = twiliow.Notify(str(pulluser['telephone']), usercheck['name'], request["Body"][0])
-				updateLogs = "UPDATE requests SET Status='Closed', responded='true', response='{}' where requestId='{}'".format(request["body"][0],check['requestId'])
-				print updateLogs
-				database.executeSQL(updateLogs)
-		except ValueError as e:
-			print e
+		usercheck = database.get_row("SELECT * FROM users where telephone='{}' LIMIT 1".format(number))
+		que = request["Body"][0].split(' ', 1)
+		check = database.get_row("SELECT * FROM requests where toUserId='{}' and people='{}' and Status='Active' LIMIT 1".format(usercheck['userId'], str(que[0])))
+		check1 = database.get_results("SELECT * FROM requests where toUserId='{}' and people='{}' and Status='Active' LIMIT 1".format(usercheck['userId'], str(que[0])))
+		if not check1:
+			print "error"
+		else:
+			try:
+				if check['responded'] == "false":
+					pulluser = database.get_row("SELECT * FROM users where userId='{}' LIMIT 1".format(check['fromUserId']))
+					response = twiliow.Notify(str(pulluser['telephone']), usercheck['name'], que[1])
+					database.executeSQL("UPDATE requests SET Status='Closed', responded='true', response='{}' where requestId='{}'".format(str(que[1]),check['requestId']))
+					return {"sucsess":response}
+				else:
+					print "Error	"
+			except ValueError as e:
+				print e
