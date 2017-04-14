@@ -47,7 +47,7 @@ def parseAccessToken(r):
 	 if "access_token" in r:
 
 	 	# look up user in users table where access_token = r["access_token"]
-		user = database.get_row("SELECT * FROM users where guid='{}'LIMIT 1".format(r["access_token"]))
+		user = database.get_results("SELECT * FROM users where guid='{}'LIMIT 1".format(r["access_token"]))
 	 	# if user found
 		if user:
 	 		# check expiration date of session
