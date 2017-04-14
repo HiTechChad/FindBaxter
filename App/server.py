@@ -13,6 +13,86 @@ sys.path.insert(0, '../../config') # moved outside repo to be system-specific
 import config, website, database, model
 
 
+def runRequest(r):
+	# get input
+	httpReq = environ["wsgi.input"].read()
+	try:
+		r = json.loads(httpReq, strict=False)
+		
+	except ValueError as e:
+		return { "error" : "Bad JSON! Bad!"}
+
+	if "verb" in r : 
+		v = r["verb"]
+
+		if v == "login"
+			return loginUser(r)
+
+		r["user"] = parseAccessToken(r);
+		if "error" in r["user"] 
+			return r["user"]
+
+		m = model.AppModel()
+		
+		if v in dir(m): 
+		 	return getattr(m, v)(r) #do this shit!
+		else:
+			return { "error" : "That action is unavailable."}
+	else:
+		return { "error" : "No action requested."}
+
+
+def parseAccessToken(r):
+
+	 if "access_token" in r:
+
+	 	# look up user in users table where access_token = r["access_token"]
+
+	 	# if user found
+
+	 		# check expiration date of session
+
+			 	# if good, return user
+
+			 	# if not, return { "error" : "Session Expired" }
+
+	 	# else return { "error" : "Bad Token" }
+
+	 else :
+	 	# return { "error" : "No Access Token" }
+
+
+def loginUser
+
+	 if "google_token" in r:
+
+	 	# look up google_token using HTTP API
+
+	 	# if user found in Google, look for user in users table
+
+	 		# if user found in table 
+
+	 			# generate new access_token
+
+	 			# update users table
+
+	 			# return { "access_token" : "new access_token" }
+
+	 		# if user not found in table
+
+	 			# generate new user with info from Google
+
+	 			# insert into users table
+
+	 			# return { "access_token" : "new access_token" }
+
+	 	# else return { "error" : "Bad Google Token" }
+
+	 else :
+	 	# return { "error" : "No Google Token" }
+
+
+
 def application(environ, start_response):
 
 	# if we're requesting a page or a file, get it
@@ -54,26 +134,7 @@ def application(environ, start_response):
 			
 
 		else :
-
-			# get input
-			httpReq = environ["wsgi.input"].read()
-			try:
-				r = json.loads(httpReq, strict=False)
-				
-			except ValueError as e:
-				response = { "error" : "Bad JSON! Bad!"}
-				r = {}	
-			if "verb" in r : 
-				v = r["verb"]
-				m = model.AppModel()
-				
-				if v in dir(m): 
-				 	response = getattr(m, v)(r) #do this shit!
-				else:
-					response = { "error" : "That action is unavailable."}
-			else:
-				response = { "error" : "No action requested."}
-
+			response = runRequest(r)
 
 		
 		# send response
