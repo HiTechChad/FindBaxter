@@ -1,7 +1,7 @@
 
 
 #import system libs
-import mysql.connector, os, json, sys, twiliow
+import mysql.connector, os, json, sys, twiliow, requests
 from gevent.pywsgi import WSGIServer
 from gevent import monkey
 from cgi import parse_qs, escape
@@ -10,8 +10,8 @@ monkey.patch_all() # makes many blocking calls asynchronous
 
 # import application objects
 sys.path.insert(0, '../../config') # moved outside repo to be system-specific
-import config, website, database, model
-
+import config, website, database, model, guid
+from oauth2client import client, crypt
 
 def application(environ, start_response):
 
@@ -23,7 +23,36 @@ def application(environ, start_response):
 
 	# handle POST api requests
 	if environ["REQUEST_METHOD"] == "POST": 
-
+	
+		if environ['PATH_INFO'] == "/oAuth":
+			httpReq = environ["wsgi.input"].read()
+			try:
+				r = json.loads(httpReq, strict=False)
+				
+			except ValueError as e:
+				response = { "error" : "Bad JSON! Bad!"}
+				r = {}	
+			if "initToken" in r:
+				v = r['initToken']
+				Authentication = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + v).json()
+				if "error_description" not in Authentication	:
+					searchUserTable = database.get_results("SELECT * FROM users where email='{}' LIMIT 1".format(check['email']))
+					if not searchUserTable:
+						addNewUser = {
+							"name":Authentication['name'],
+							"pic":Authentication['picture'],
+							"email":Authentication['email'],
+							"guid":guid.id_generator()
+						}
+						database.insertObj(addNewUser, "users")
+						return {"Sucsess":"User Authenticated Sucsessfully, Added New User"}
+					else:
+						return searchUserTable['guid']
+				else:
+					{"Error": "INVALID AUTHENTICATION YOU SHALL NOT PASS"}
+			
+			
+			
 		if environ['PATH_INFO'] == "/twilio_callback" :
 
 			# READ TWILIO RESPONSE INTO REQUEST OBJECT r
@@ -63,6 +92,8 @@ def application(environ, start_response):
 			except ValueError as e:
 				response = { "error" : "Bad JSON! Bad!"}
 				r = {}	
+			if "accsess_token" in r:
+				Authentication = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + r["accsess_token"]).json()
 			if "verb" in r : 
 				v = r["verb"]
 				m = model.AppModel()
