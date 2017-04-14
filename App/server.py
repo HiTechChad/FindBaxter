@@ -1,7 +1,7 @@
 
 
 #import system libs
-import mysql.connector, os, json, sys, twiliow, requests
+import mysql.connector, os, json, sys, twiliow, requests, random, string
 from gevent.pywsgi import WSGIServer
 from gevent import monkey
 from cgi import parse_qs, escape
@@ -13,7 +13,7 @@ sys.path.insert(0, '../../config') # moved outside repo to be system-specific
 import config, website, database, model, guid
 from oauth2client import client, crypt
 
-def runRequest(r):
+def runRequest(environ):
 	# get input
 	httpReq = environ["wsgi.input"].read()
 	try:
@@ -25,11 +25,11 @@ def runRequest(r):
 	if "verb" in r : 
 		v = r["verb"]
 
-		if v == "login"
+		if v == "login":
 			return loginUser(r)
 
-		r["user"] = parseAccessToken(r);
-		if "error" in r["user"] 
+		r["user"] = parseAccessToken(r)
+		if "error" in r["user"]:
 			return r["user"]
 
 		m = model.AppModel()
@@ -47,49 +47,58 @@ def parseAccessToken(r):
 	 if "access_token" in r:
 
 	 	# look up user in users table where access_token = r["access_token"]
-
+		user = database.get_row("SELECT * FROM users where guid='{}'LIMIT 1".format(r["access_token"]))
 	 	# if user found
-
+		if user:
 	 		# check expiration date of session
-
+			return user
 			 	# if good, return user
 
 			 	# if not, return { "error" : "Session Expired" }
 
 	 	# else return { "error" : "Bad Token" }
-
+		else:
+			return {"error": "Bad Token"}
 	 else :
 	 	# return { "error" : "No Access Token" }
+		return {"error": "No Access Token"}
 
 
-def loginUser
+def loginUser(r):
 
 	 if "google_token" in r:
-
+			
 	 	# look up google_token using HTTP API
-
+		Authentication = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + r['google_token']).json()
 	 	# if user found in Google, look for user in users table
-
+		if "error_description" not in Authentication:
+			user = database.get_row("SELECT * FROM users where name='{}' LIMIT 1".format(Authentication['name']))
 	 		# if user found in table 
-
+			if user:
 	 			# generate new access_token
-
+				guid = ''.join(random.choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(16))
 	 			# update users table
-
+				database.executeSQL("UPDATE users SET guid='{}' WHERE name='{}'".format(guid, user['name']))
 	 			# return { "access_token" : "new access_token" }
-
+				return {"access_token": guid}
 	 		# if user not found in table
-
+			if not user:
 	 			# generate new user with info from Google
-
+				guid = ''.join(random.choice(string.ascii_uppercase + string.digits + ascii_lowercase) for _ in range(16))
+				newUser = {
+					"name":Authentication['name'],
+					"pic":Authentication['picture'],
+					"email":Authentication['email'],
+					"guid":guid
+				}
 	 			# insert into users table
-
+				database.insertObj(newUser, "users")
 	 			# return { "access_token" : "new access_token" }
-
-	 	# else return { "error" : "Bad Google Token" }
-
+				return {"access_token": guid}
+		else:
+			return {"error": "Bad Google Token"}
 	 else :
-	 	# return { "error" : "No Google Token" }
+	 	return { "error" : "No Google Token" }
 
 
 
@@ -102,40 +111,11 @@ def application(environ, start_response):
 
 
 	# handle POST api requests
-	if environ["REQUEST_METHOD"] == "POST": 
-	
-		if environ['PATH_INFO'] == "/oAuth":
-			httpReq = environ["wsgi.input"].read()
-			try:
-				r = json.loads(httpReq, strict=False)
-				
-			except ValueError as e:
-				response = { "error" : "Bad JSON! Bad!"}
-				r = {}	
-			if "initToken" in r:
-				v = r['initToken']
-				Authentication = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + v).json()
-				if "error_description" not in Authentication	:
-					searchUserTable = database.get_results("SELECT * FROM users where email='{}' LIMIT 1".format(check['email']))
-					if not searchUserTable:
-						addNewUser = {
-							"name":Authentication['name'],
-							"pic":Authentication['picture'],
-							"email":Authentication['email'],
-							"guid":guid.id_generator()
-						}
-						database.insertObj(addNewUser, "users")
-						return {"Sucsess":"User Authenticated Sucsessfully, Added New User"}
-					else:
-						return searchUserTable['guid']
-				else:
-					{"Error": "INVALID AUTHENTICATION YOU SHALL NOT PASS"}
-			
-			
-			
-		if environ['PATH_INFO'] == "/twilio_callback" :
+	if environ["REQUEST_METHOD"] == "POST":
 
-			# READ TWILIO RESPONSE INTO REQUEST OBJECT r
+		# if it's twilio
+		if environ['PATH_INFO'] == "/twilio_callback" :
+		# READ TWILIO RESPONSE INTO REQUEST OBJECT r
 			try:
 				request_body_size = int(environ.get('CONTENT_LENGTH', 0))
 			except (ValueError):
@@ -154,16 +134,10 @@ def application(environ, start_response):
 					response = getattr(m, v)(r) #do this shit!
 				else:
 					response = { "error" : "That action is unavailable."}
-
-				
-			
-
-			
-			# IS THERE A RESPONSE?
-			
-
+					
+		# EVERYTHING else
 		else :
-			response = runRequest(r)
+			response = runRequest(environ)
 
 
 		
