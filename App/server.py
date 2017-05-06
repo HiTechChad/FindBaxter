@@ -47,7 +47,7 @@ def parseAccessToken(r):
 	 if "access_token" in r:
 
 	 	# look up user in users table where access_token = r["access_token"]
-		user = database.get_results("SELECT * FROM users where guid='{}'LIMIT 1".format(r["access_token"]))
+		user = database.get_results("SELECT * FROM users WHERE guid='{}' LIMIT 1".format(r["access_token"]))
 	 	# if user found
 		if user:
 	 		# check expiration date of session
@@ -69,22 +69,17 @@ def loginUser(r):
 	 if "google_token" in r:
 			
 	 	# look up google_token using HTTP API
-		Authentication = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + r['google_token']).json()
+		try:
+			Authentication = requests.get('https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=' + r['google_token']).json()
+		except(TypeError):
+			return {"error":"failed to check google"}
 	 	# if user found in Google, look for user in users table
 		if "error_description" not in Authentication:
-			user = database.get_row("SELECT * FROM users where name='{}' LIMIT 1".format(Authentication['name']))
+			user = database.get_results("SELECT * FROM users where name='{}' LIMIT 1".format(Authentication['name']))
 	 		# if user found in table 
-			if user:
-	 			# generate new access_token
-				guid = ''.join(random.choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(16))
-	 			# update users table
-				database.executeSQL("UPDATE users SET guid='{}' WHERE name='{}'".format(guid, user['name']))
-	 			# return { "access_token" : "new access_token" }
-				return {"access_token": guid}
-	 		# if user not found in table
 			if not user:
-	 			# generate new user with info from Google
-				guid = ''.join(random.choice(string.ascii_uppercase + string.digits + ascii_lowercase) for _ in range(16))
+				# generate new user with info from Google
+				guid = ''.join(random.choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(16))
 				newUser = {
 					"name":Authentication['name'],
 					"pic":Authentication['picture'],
@@ -94,7 +89,16 @@ def loginUser(r):
 	 			# insert into users table
 				database.insertObj(newUser, "users")
 	 			# return { "access_token" : "new access_token" }
-				return {"access_token": guid}
+				return {"response":guid, "user": user}
+			if user:
+				user = database.get_row("SELECT * FROM users where name='{}' LIMIT 1".format(Authentication['name']))
+				# generate new access_token
+				guid = ''.join(random.choice(string.ascii_uppercase + string.digits + string.ascii_lowercase) for _ in range(16))
+	 			# update users table
+				database.executeSQL("UPDATE users SET guid='{}' WHERE name='{}'".format(str(guid), user['name']), True)
+	 			# return { "access_token" : "new access_token" }
+				return {"response":guid, "user": user}
+				# if user not found in table
 		else:
 			return {"error": "Bad Google Token"}
 	 else :

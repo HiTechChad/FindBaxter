@@ -1,14 +1,16 @@
 
 import config, mysql.connector
 
-def executeSQL(query):
+def executeSQL(query, runCommit = False):
 	c = config.conn
-	c.ping(True)
+	c.ping()
 	cur = c.cursor()
 
 	try:
 		cur.execute(query)
-		return {"cursor" : cur }
+		if(runCommit):
+			c.commit()
+		return {"cursor" : cur, "query":query}
 
 	except mysql.connector.Error as e:
 		cur.close()

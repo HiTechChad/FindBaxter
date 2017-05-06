@@ -8,6 +8,7 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 		// INITIATLIZE VARIABLES ON LOAD
 
 		$scope.init = function(){
+			$scope.login();
 			$scope.people = [
 				"Dawson Spencer",
 				"Rob Korobkin",
@@ -26,16 +27,9 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 				email : "",
 			}
 			$scope.fetchEveryone();
-
+			
 
 			$scope.all_users = [];
-			if('all_users' in staticData){
-				$scope.all_users = staticData.all_users;
-			}
-			if('currentUser' in staticData){
-				$scope.currentUser = staticData.currentUser;
-			}
-
 		}
 
 
@@ -55,6 +49,10 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 			$http.post('api.py', req).then(function(responseHTTP){
 				var response = responseHTTP.data;
 				if(("error" in response)) {
+					if(response.error == "No Access Token" || response.error =="Bad Token" || response.error == "Bad Google Token"){
+						window.location.replace('http://localhost:8888/login.html');
+
+					}
 					$scope.view = 'error';
 					$scope.error = response.error;
 				}
@@ -62,42 +60,61 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 			});
 		}
 
-
+		$scope.login = function(){
+			var req = {
+				verb : 'login',
+				google_token : localStorage.getItem("google_token")
+			}
+			var callback = function(response){
+				localStorage.setItem("access_token", response.response);
+				$scope.access_token = response.response;
+				$scope.user = response.user;
+				$scope.view = 'viewPerson';
+			}
+			$scope.callAPI(req, callback);
+		}
 		// FETCH PERSON BY NAME
 		$scope.fetchPerson = function(){
 			var req = {
 				verb : 'getPerson',
-				name : $scope.selectedName
+				name : $scope.selectedName,
+				access_token: localStorage.getItem("access_token")
 			}
 
 			$scope.callAPI(req, function(response){
 				$scope.selected_person = response;
-				$scope.view = 'viewPerson'
+				$scope.view = 'viewPerson';
 			});		
 		}
 		
 		// Fetch Everyone by name
 		$scope.fetchEveryone = function(){
 			var req = {
-				verb: 'getPeople'
+				verb: 'getPeople',
+				access_token: localStorage.getItem("access_token")
 			}
 			
 			$scope.callAPI(req, function(response){
 				$scope.all_users = response;
-				$scope.view = 'viewPerson'
+				$scope.view = 'viewPerson';
 			});
 		}
 		
 		//MEETING REQUEST
-		$scope.ReqMeeting = function(username){
+		$scope.ReqMeeting = function(username, meeting){
 			var req = {
-				verb:'sendTxt',
+				verb:'SendMessage',
+				username: $scope.user.name,
 				name: username,
-				type: $scope.selectedMeeting
+				meeting: meeting,
+				access_token: localStorage.getItem("access_token")
 			}
 			var callback = function(response){
-				$scope.number = response;
-				$scope.view = 'viewPerson'
+				$scope.toUser = response;
+				$scope.view = 'viewPerson';
+				document.getElementById("messageDetails").style.display = null;
+				document.getElementById("messageDetails").style.visibility = "visible";
+				document.getElementById("table").style.display = "none";
 			}
 			$scope.callAPI(req, callback);
 		}
@@ -147,5 +164,8 @@ function isEmail(email) {
   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
   return regex.test(email);
 }
-
-
+function closeConfermation(){
+	document.getElementById("messageDetails").style.display = "none";
+	document.getElementById("messageDetails").style.visibility = "hidden";
+	document.getElementById("table").style.display = null;
+}

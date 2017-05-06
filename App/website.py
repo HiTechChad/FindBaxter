@@ -3,7 +3,7 @@ import os, json
 def return_static(environ, start_response):
 
 	path = environ['PATH_INFO']
-	if(path == '' or path == '/') : path = '/index.html'
+	if(path == '' or path == '/') : path = '/login.html'
 	
 	path = os.getcwd() + "/client" + path
 

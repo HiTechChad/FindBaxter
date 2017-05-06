@@ -1,7 +1,21 @@
-import database, twiliow, json, recieve, datetime, time
-
+import database, twiliow, json, recieve, datetime, time, random, string
+from gevent.pywsgi import WSGIServer
+from twilio.rest import Client
 class AppModel:
-
+	def test(model, request):
+		logRequest =  {
+					"fromUserId": fromUser['userId'],
+					"Status":str("Active"),
+					"toUserId": toUser['userId'],
+					"people":checkLogs[0]['count'],
+					"time":int(time.time()),
+					"responded":"false",
+					"Response":" ",
+					"twilioMessageSid": twiliowResp[1],
+					"metaDataJSON":request
+			}	
+		print database.insertObj(logRequest, "requests")
+	
 	def getPerson(model, request):
 		name = request["name"]
 		query = "SELECT * FROM users where name='{}' LIMIT 1".format(name)
@@ -28,33 +42,15 @@ class AppModel:
 				return {"true":"awsome"}
 		else:
 			return {"error":"failed to authenticate"}
-
-
-	def Auth(model, request):
-		name = request["name"]
-		authToken = request['authToken']
-		query = "SELECT * FROM users where name='{}' LIMIT 1".format(name)
-		result = database.get_row(query)
-		if(result != {"error" : "Object Not Found"}):
-			if(result['authToken'] == authToken):
-				return {"true":"user is valid"}
-			else:
-				return {"error":"invalid authToken"}
-		else:
-			return {"true":"user not found"}
-
 	def SendMessage(model, request):
 		waitTime = 0
 		fromUserName = request['username']
 		toUserName = request["name"]
 		meeting = request["meeting"]
-		fromQuery = "SELECT * FROM users where name='{}' LIMIT 1".format(fromUserName)
-		toQuery = "SELECT * FROM users where name='{}' LIMIT 1".format(toUserName)
-		toUser = database.get_row(toQuery)
-		fromUser = database.get_row(fromQuery)
+		toUser = database.get_row("SELECT * FROM users where name='{}' LIMIT 1".format(toUserName))
+		fromUser = database.get_row("SELECT * FROM users where name='{}' LIMIT 1".format(fromUserName))
 		checkQuery = "SELECT * FROM requests WHERE fromUserId='{}' AND Status='Active' LIMIT 1".format(fromUser['userId'])
 		checkLogs = database.get_results("SELECT COUNT(*) as count FROM requests WHERE Status='Active' AND toUserId='{}'".format(toUser['userId']))
-
 		result = database.get_results(checkQuery)
 		
 		if not result:
@@ -89,7 +85,7 @@ class AppModel:
 					"metaDataJSON":request
 				}	
 				print database.insertObj(logRequest, "requests")
-				return {"Sucsess":"message sent Keep an eye on your phone for a responses"}
+				return {"Sucsess":"message sent Keep an eye on your phone for a responses", "toUser":toUser}
 			else:
 				return {"error":str(twiliowResp[0])}
 		else:
@@ -103,6 +99,8 @@ class AppModel:
 		que = request["Body"][0].split(' ', 1)
 		check = database.get_row("SELECT * FROM requests where toUserId='{}' and people='{}' and Status='Active' LIMIT 1".format(usercheck['userId'], str(que[0])))
 		check1 = database.get_results("SELECT * FROM requests where toUserId='{}' and people='{}' and Status='Active' LIMIT 1".format(usercheck['userId'], str(que[0])))
+		print usercheck['userId']
+		print str(que[0])
 		if not check1:
 			print "error"
 		else:

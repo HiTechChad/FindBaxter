@@ -1,0 +1,26 @@
+<html>
+	<head>
+
+		<script>
+			function setCookie(){
+				localStorage.setItem("lastname", "Smith");
+			}
+			
+			function getCookie(){
+				var x = localStorage.getItem("lastname");
+				console.log(x);
+			}
+			function deleteCookie(){
+				localStorage.setItem("lastname", "john");
+			}
+		</script>
+	</head>
+
+	<button onclick="setCookie()">Set Cookie</button>
+	<button onclick="getCookie()">Get Cookie</button>
+	<button onclick="deleteCookie()">Delete Cookie</button>
+
+
+
+
+</html>
