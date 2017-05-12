@@ -123,7 +123,7 @@
 						<!-- USERS DISPLAY -->
 						<div class="content">
 							<div class="content bs-component">
-								<table id="table" class="table table-striped table-hover">
+								<table id="table" class="table table-striped table-hover" ng-if="view == 'list'">
 									<tbody id="tbody" class="tbody">
 										<tr ng-repeat="user in all_users">
 											<td ng-if="user.pic">
@@ -144,7 +144,7 @@
 										</tr>
 									</tbody>
 								</table>
-								<div id="messageDetails" class="messageDetails" style="display: none; visibility: hidden;">
+								<div id="messageDetails" class="messageDetails" ng-if="view == 'request'">
 									<div>
 										<div style="width:50px; height: 50px;">
 											<div id="cssworkstuff" class="cssworkstuff">
@@ -154,13 +154,18 @@
 												<div>
 													<div>
 														<div style="font-weight: bold;font-size:20px;text-align: left;">{{toUser.toUser.name}}</div>
-														<div style="font-size:17px;text-align:left;font-weight: normal; font-style: normal;">Building: {{toUser.toUser.name}}</div>
+														<div style="font-size:17px;text-align:left;font-weight: normal; font-style: normal;">Email: {{toUser.toUser.name}}</div>
 														<div style="font-size:15px;text-align:left;font-style: italic;font-weight:normal">{{toUser.Sucsess}}</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
+								</div>
+								<div id="verifyTelephone" class="verifyTelephone" ng-if="view == 'verifyTelephone'">
+									<p>Enter your Phone number to verify</p>
+									<input ng-model="telephoneNumber"></input>
+									<button>Verify</button>
 								</div>
 							</div>
 						</div>

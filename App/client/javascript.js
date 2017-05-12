@@ -9,29 +9,9 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 
 		$scope.init = function(){
 			$scope.login();
-			$scope.people = [
-				"Dawson Spencer",
-				"Rob Korobkin",
-				"Simon Hergenhan",
-				"Adam Gilman",
-				"banana"
-			];
-			$scope.meetings = [
-				"short",
-				"meadium",
-				"long"
 			
-			];
-			$scope.newPerson = {
-				name : "",
-				email : "",
-			}
-			$scope.fetchEveryone();
-			
-
-			$scope.all_users = [];
 		}
-
+		$scope.telephone
 
 		// CHANGE VIEW
 		$scope.changeView = function(viewName){
@@ -59,7 +39,7 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 				else f(response);
 			});
 		}
-
+		// LOGIN
 		$scope.login = function(){
 			var req = {
 				verb : 'login',
@@ -69,10 +49,16 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 				localStorage.setItem("access_token", response.response);
 				$scope.access_token = response.response;
 				$scope.user = response.user;
-				$scope.view = 'viewPerson';
+				
+				if($scope.user.telephone != null || $scope.user.telephone != ""){
+					$scope.fetchEveryone();
+				}else if($scope.user.telephone == null || $scope.user.telephone == ""){
+					$scope.view = "verifyTelephone"
+				}
 			}
 			$scope.callAPI(req, callback);
 		}
+
 		// FETCH PERSON BY NAME
 		$scope.fetchPerson = function(){
 			var req = {
@@ -96,7 +82,7 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 			
 			$scope.callAPI(req, function(response){
 				$scope.all_users = response;
-				$scope.view = 'viewPerson';
+				$scope.view = 'list';
 			});
 		}
 		
@@ -111,7 +97,7 @@ app.controller('peopleApiCtrl', ['$scope', '$http',
 			}
 			var callback = function(response){
 				$scope.toUser = response;
-				$scope.view = 'viewPerson';
+				$scope.view = 'request';
 				document.getElementById("messageDetails").style.display = null;
 				document.getElementById("messageDetails").style.visibility = "visible";
 				document.getElementById("table").style.display = "none";
